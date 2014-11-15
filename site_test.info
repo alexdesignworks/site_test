@@ -1,6 +1,6 @@
-name = Site specific testing
-description = Provides sandbox-free SimpleTest testing to custom modules on the site.
-package = Custom
+name = Site test
+description = Provides extensions to simpletest to allow testing within the current site configuration.
+package = Testing
 
 dependencies[] = simpletest
 
