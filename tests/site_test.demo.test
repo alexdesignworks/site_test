@@ -1,0 +1,84 @@
+<?php
+/**
+ * @file
+ * Test for the home page of this website.
+ */
+
+class SiteTestingHomePageTestCase extends SiteTestCase {
+  /**
+   * Stores the user created for this test.
+   */
+  protected $siteUser;
+
+  /**
+   * Information about the home page test.
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Home page',
+      'description' => 'Tests the contents of the home page.',
+      'group' => 'Site Testing',
+      'mode' => 'site',
+    );
+  }
+
+  /**
+   * Create the site user to be used within the home page tests during setup.
+   */
+  public function setUp() {
+    // Run the default setUp function provided by our common testing class.
+    parent::setUp();
+
+    // Create a user who has access content permission.
+    $this->siteUser = $this->drupalCreateUser(array('access content'));
+  }
+
+  /**
+   * Tests that logged in users do not get log in form.
+   */
+  public function testHomePageLoginMarkup() {
+    // Visit the home page.
+    $this->drupalGet('');
+
+    // Check the welcome message and username field are present.
+    $this->assertText('Welcome to Drupal', 'Title text found.');
+    $this->assertFieldByName('name', '', 'Username field found.');
+
+    // Log in as the site user we created in the setUp phase of the test.
+    $this->drupalLogin($this->siteUser);
+
+    // Visit the homepage and check the username field is not present.
+    $this->drupalGet('');
+    $this->assertNoFieldByName('name', '', 'Username not visible for logged in user.');
+  }
+
+  /**
+   *  Test that the home page has the 'Powered by Drupal' message.
+   */
+  public function testStillAnon() {
+    // Visit the home page.
+    $this->drupalGet('');
+
+    // Check that the powered by block exists using XPATH.
+    $powered_by_block = $this->xpath('//div[@id="block-system-powered-by"]');
+    $this->assertTrue($powered_by_block, 'Powered by block exists.');
+
+    // If the powered by block exists, check the powered by text exists.
+    if ($powered_by_block) {
+      $this->assertText('Powered by Drupal', 'Powered by message is correct.');
+    }
+  }
+
+  /**
+   * Remove the user created in this test before running the final tear down.
+   */
+  public function tearDown() {
+    // Remove user created in the setUp part of this test.
+    if ($this->siteUser) {
+      user_delete($this->siteUser->uid);
+    }
+
+    // Run the default teardown function provided by our common testing class.
+    parent::tearDown();
+  }
+}
