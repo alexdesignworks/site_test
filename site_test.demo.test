@@ -18,7 +18,7 @@ class SiteTestingHomePageTestCase extends SiteTestCase {
       'name' => 'Home page',
       'description' => 'Tests the contents of the home page.',
       'group' => 'Site Testing',
-      'mode' => 'core',
+      'mode' => 'site',
     );
   }
 

@@ -51,6 +51,28 @@ abstract class SiteTestCase extends DrupalWebTestCase {
    * Overrides default tear down handler to prevent database sandbox deletion.
    */
   protected function tearDown() {
+    switch ($this->getMethod()) {
+      case 'core':
+        $this->tearDownForCore();
+        break;
+
+      case 'site':
+        $this->tearDownForOnSite();
+        break;
+    }
+  }
+
+  /**
+   * Tear down for core based testing.
+   */
+  protected function tearDownForCore() {
+    parent::tearDown();
+  }
+
+  /**
+   * Tear down for on site testing.
+   */
+  protected function tearDownForOnSite() {
     // In case a fatal error occurred that was not in the test process read the
     // log to pick up any fatal errors.
     simpletest_log_read($this->testId, $this->databasePrefix, get_class($this), TRUE);
@@ -75,8 +97,8 @@ abstract class SiteTestCase extends DrupalWebTestCase {
     $info = $this->getInfo();
     $method = 'core';
 
-    if (!empty($info['method'])) {
-      $method = $info['method'];
+    if (!empty($info['mode'])) {
+      $method = $info['mode'];
     }
 
     return $method;
