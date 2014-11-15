@@ -1,4 +1,4 @@
-name = Site test
+name = Site Test
 description = Provides extensions to simpletest to allow testing within the current site configuration.
 package = Testing
 
