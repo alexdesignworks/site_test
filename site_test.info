@@ -5,6 +5,7 @@ package = Custom
 dependencies[] = simpletest
 
 core = 7.x
-files[] = site_test.common.test
-files[] = site_test.demo.test
-files[] = site_test.demo_core.test
+files[] = site_test_case.php
+files[] = tests/site_test.demo.test
+files[] = tests/site_test.demo_core.test
+files[] = tests/site_test.demo_clone.test
