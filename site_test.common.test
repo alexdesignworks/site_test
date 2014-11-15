@@ -14,6 +14,28 @@ abstract class SiteTestCase extends DrupalWebTestCase {
    * Overrides default set up handler to prevent database sand-boxing.
    */
   protected function setUp() {
+    switch ($this->getMethod()) {
+      case 'core':
+        $this->setUpForCore();
+        break;
+
+      case 'site':
+        $this->setUpForOnSite();
+        break;
+    }
+  }
+
+  /**
+   * Initialize a standard Drupal core simple test case.
+   */
+  protected function setUpForCore() {
+    parent::setUp();
+  }
+
+  /**
+   * Set up for on-site, non sandbox testing.
+   */
+  protected function setUpForOnSite() {
     // Use the test mail class instead of the default mail handler class.
     variable_set('mail_system', array('default-system' => 'TestingMailSystem'));
     $this->originalFileDirectory = variable_get('file_public_path', conf_path() . '/files');
@@ -41,5 +63,22 @@ abstract class SiteTestCase extends DrupalWebTestCase {
 
     // Close the CURL handler.
     $this->curlClose();
+  }
+
+  /**
+   * Get method for test.
+   *
+   * @return string
+   *   The method of the test.
+   */
+  public function getMethod() {
+    $info = $this->getInfo();
+    $method = 'core';
+
+    if (!empty($info['method'])) {
+      $method = $info['method'];
+    }
+
+    return $method;
   }
 }
