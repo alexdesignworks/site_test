@@ -5,6 +5,10 @@
  * Common testing class for this Drupal site.
  */
 abstract class SiteTestCase extends DrupalWebTestCase {
+  /**
+   * Test mode
+   */
+  protected $testMode;
 
   /**
    * Overrides default set up handler to prevent database sand-boxing.
