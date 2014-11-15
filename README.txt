@@ -2,6 +2,7 @@ CONTENTS OF THIS FILE
 ---------------------
  * Introduction
  * Requirements
+ * Recommended modules
  * Writing your first test
  * Maintainers
 
@@ -17,6 +18,14 @@ REQUIREMENTS
 ------------
 This module requires the following modules:
  * Simpletest (core)
+
+RECOMMENDED MODULES
+-------------------
+This module requires the following modules:
+ * Devel (https://www.drupal.org/project/devel):
+   Use Devel to generate content for use in tests with prefilled fields and
+   lorem ipsum content.
+
 
 WRITING YOUR FIRST TEST
 -----------------------
