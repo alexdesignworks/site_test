@@ -1,0 +1,10 @@
+name = Site specific testing
+description = Provides sandbox-free SimpleTest testing to custom modules on the site.
+package = Custom
+
+dependencies[] = simpletest
+
+core = 7.x
+files[] = site_test.common.test
+files[] = site_test.homepage.test
+files[] = site_test.homepage_core.test
