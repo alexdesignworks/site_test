@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Test for the home page of this website.
+ * Test for the home page of this website on cloned BD.
  */
 
 class SiteTestingHomePageCloneTestCase extends SiteTestCase {
@@ -16,7 +16,7 @@ class SiteTestingHomePageCloneTestCase extends SiteTestCase {
   public static function getInfo() {
     return array(
       'name' => 'Home page clone',
-      'description' => 'Tests the contents of the home page.',
+      'description' => 'Tests the contents of the home page on cloned DB.',
       'group' => 'Site Testing',
       'mode' => 'clone',
     );
@@ -55,19 +55,19 @@ class SiteTestingHomePageCloneTestCase extends SiteTestCase {
   /**
    *  Test that the home page has the 'Powered by Drupal' message.
    */
-//  public function testStillAnon() {
-//    // Visit the home page.
-//    $this->drupalGet('');
-//
-//    // Check that the powered by block exists using XPATH.
-//    $powered_by_block = $this->xpath('//div[@id="block-system-powered-by"]');
-//    $this->assertTrue($powered_by_block, 'Powered by block exists.');
-//
-//    // If the powered by block exists, check the powered by text exists.
-//    if ($powered_by_block) {
-//      $this->assertText('Powered by Drupal', 'Powered by message is correct.');
-//    }
-//  }
+  public function testStillAnon() {
+    // Visit the home page.
+    $this->drupalGet('');
+
+    // Check that the powered by block exists using XPATH.
+    $powered_by_block = $this->xpath('//div[@id="block-system-powered-by"]');
+    $this->assertTrue($powered_by_block, 'Powered by block exists.');
+
+    // If the powered by block exists, check the powered by text exists.
+    if ($powered_by_block) {
+      $this->assertText('Powered by Drupal', 'Powered by message is correct.');
+    }
+  }
 
   /**
    * Remove the user created in this test before running the final tear down.
