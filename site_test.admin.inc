@@ -38,6 +38,19 @@ function site_test_list_form($form) {
     '#value' => t('Run tests'),
   );
 
+  $form['clean'] = array(
+    '#type' => 'fieldset',
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+    '#title' => t('Clean test environment'),
+    '#description' => t('Remove tables with the prefix "simpletest" and temporary directories that are left over from tests that crashed. This is intended for developers when creating tests.'),
+  );
+  $form['clean']['op'] = array(
+    '#type' => 'submit',
+    '#value' => t('Clean environment'),
+    '#submit' => array('simpletest_clean_environment'),
+  );
+  
   module_load_include('inc', 'simpletest', 'simpletest.pages');
   $form['#submit'][] = 'simpletest_test_form_submit';
 
