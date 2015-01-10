@@ -4,6 +4,7 @@
  * @file
  * Common testing class for this Drupal site.
  */
+
 abstract class SiteTestCase extends DrupalWebTestCase {
   /**
    * Test mode
@@ -87,7 +88,7 @@ abstract class SiteTestCase extends DrupalWebTestCase {
    * Set up for site clone testing.
    */
   protected function setUpForClone() {
-    global $user, $language, $conf;
+    global $language, $conf;
 
     // Create the database prefix for this test.
     $this->prepareDatabasePrefix();
@@ -118,7 +119,8 @@ abstract class SiteTestCase extends DrupalWebTestCase {
     // system_rebuild_module_data() (in drupal_install_system()) will register
     // the test's profile as a module. Without this, the installation profile of
     // the parent site (executing the test) is registered, and the test
-    // profile's hook_install() and other hook implementations are never invoked.
+    // profile's hook_install() and other hook implementations are never
+    // invoked.
     $conf['install_profile'] = $this->profile;
 
     // Use current files directories: public, private, temp.
@@ -134,11 +136,6 @@ abstract class SiteTestCase extends DrupalWebTestCase {
     // picked up.
     // @todo: Is this really required? It could be very slow on huge DBs.
     $this->resetAll();
-//
-//    // Clone each table into the new database.
-//    foreach ($this->schemas as $name => $schema) {
-//      $this->cloneTable($name, $this->sources[$name], $schema);
-//    }
 
     // Restore necessary variables.
     variable_set('install_task', 'done');
@@ -200,7 +197,7 @@ abstract class SiteTestCase extends DrupalWebTestCase {
       }
 
       $destination = Database::getConnection()->prefixTables('{' . $name . '}');
-      db_query('INSERT INTO ' . $destination . ' SELECT * FROM ' . $sources[$name]);
+      db_query('INSERT INTO ' . db_escape_table($destination) . ' SELECT * FROM ' . db_escape_table($sources[$name]));
     }
 
     $db_prefix = $db_prefix_current;
@@ -241,9 +238,9 @@ abstract class SiteTestCase extends DrupalWebTestCase {
     simpletest_log_read($this->testId, $this->databasePrefix, get_class($this), TRUE);
 
     // Output info about any captured emails.
-    $emailCount = count(variable_get('drupal_test_email_collector', array()));
-    if ($emailCount) {
-      $message = format_plural($emailCount, '1 e-mail was sent during this test.', '@count e-mails were sent during this test.');
+    $email_count = count(variable_get('drupal_test_email_collector', array()));
+    if ($email_count) {
+      $message = format_plural($email_count, '1 e-mail was sent during this test.', '@count e-mails were sent during this test.');
       $this->pass($message, t('E-mail'));
     }
 
@@ -255,16 +252,16 @@ abstract class SiteTestCase extends DrupalWebTestCase {
    * Tear down for clone based testing.
    */
   protected function tearDownForClone() {
-    global $user, $language, $conf;
+    global $language;
 
     // In case a fatal error occurred that was not in the test process read the
     // log to pick up any fatal errors.
     simpletest_log_read($this->testId, $this->databasePrefix, get_class($this), TRUE);
 
     // Output info about any captured emails.
-    $emailCount = count(variable_get('drupal_test_email_collector', array()));
-    if ($emailCount) {
-      $message = format_plural($emailCount, '1 e-mail was sent during this test.', '@count e-mails were sent during this test.');
+    $email_count = count(variable_get('drupal_test_email_collector', array()));
+    if ($email_count) {
+      $message = format_plural($email_count, '1 e-mail was sent during this test.', '@count e-mails were sent during this test.');
       $this->pass($message, t('E-mail'));
     }
 

@@ -1,5 +1,7 @@
 <?php
+
 /**
+ * @file
  * Admin callbacks for site test module.
  */
 
@@ -50,7 +52,7 @@ function site_test_list_form($form) {
     '#value' => t('Clean environment'),
     '#submit' => array('simpletest_clean_environment'),
   );
-  
+
   module_load_include('inc', 'simpletest', 'simpletest.pages');
   $form['#submit'][] = 'simpletest_test_form_submit';
 
@@ -63,5 +65,6 @@ function site_test_list_form($form) {
 function site_test_get_all_tests() {
   simpletest_test_get_all();
   $site_test_cache = cache_get(SITE_TEST_LIST_CID);
+
   return $site_test_cache->data;
 }

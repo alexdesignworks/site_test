@@ -53,7 +53,7 @@ class SiteTestingHomePageCoreTestCase extends SiteTestCase {
   }
 
   /**
-   *  Test that the home page has the 'Powered by Drupal' message.
+   * Test that the home page has the 'Powered by Drupal' message.
    */
   public function testStillAnon() {
     // Visit the home page.
