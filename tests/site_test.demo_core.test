@@ -16,7 +16,7 @@ class SiteTestingHomePageCoreTestCase extends SiteTestCase {
   public static function getInfo() {
     return array(
       'name' => 'Home page core',
-      'description' => 'Tests the contents of the home page with sandbox.',
+      'description' => 'Tests the contents of the home page within sandbox.',
       'group' => 'Site Testing',
       'mode' => 'core',
     );

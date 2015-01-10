@@ -4,7 +4,7 @@
  * Test for the home page of this website.
  */
 
-class SiteTestingHomePageTestCase extends SiteTestCase {
+class SiteTestingHomePageSiteTestCase extends SiteTestCase {
   /**
    * Stores the user created for this test.
    */
@@ -15,8 +15,8 @@ class SiteTestingHomePageTestCase extends SiteTestCase {
    */
   public static function getInfo() {
     return array(
-      'name' => 'Home page',
-      'description' => 'Tests the contents of the home page.',
+      'name' => 'Home page site',
+      'description' => 'Tests the contents of the home page on current website.',
       'group' => 'Site Testing',
       'mode' => 'site',
     );

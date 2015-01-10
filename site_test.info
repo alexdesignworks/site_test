@@ -6,6 +6,6 @@ dependencies[] = simpletest
 
 core = 7.x
 files[] = site_test_case.php
-files[] = tests/site_test.demo.test
+files[] = tests/site_test.demo_site.test
 files[] = tests/site_test.demo_core.test
 files[] = tests/site_test.demo_clone.test
