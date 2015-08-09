@@ -40,8 +40,7 @@ class SiteTestingHomePageCloneTestCase extends SiteTestCase {
     // Visit the home page.
     $this->drupalGet('');
 
-    // Check the welcome message and username field are present.
-    $this->assertText('Welcome to Drupal', 'Title text found.');
+    // Check the username field are present.
     $this->assertFieldByName('name', '', 'Username field found.');
 
     // Log in as the site user we created in the setUp phase of the test.
