@@ -1,12 +1,13 @@
 <?php
+
 /**
  * @file
  * Test for the home page of this website on cloned BD.
  */
-
 class SiteTestingHomePageCloneTestCase extends SiteTestCase {
   /**
-   * Stores the user created for this test.
+   * @var
+   * The user created for current test.
    */
   protected $siteUser;
 
@@ -23,14 +24,27 @@ class SiteTestingHomePageCloneTestCase extends SiteTestCase {
   }
 
   /**
-   * Create the site user to be used within the home page tests during setup.
+   * @inheritdoc
    */
   public function setUp() {
     // Run the default setUp function provided by our common testing class.
     parent::setUp();
 
-    // Create a user who has access content permission.
+    // Create the site user to be used within the home page tests during setup.
     $this->siteUser = $this->drupalCreateUser(array('access content'));
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public function tearDown() {
+    // Remove the user created in this test before running the final tear down.
+    if ($this->siteUser) {
+      user_delete($this->siteUser->uid);
+    }
+
+    // Run the default teardown function provided by our common testing class.
+    parent::tearDown();
   }
 
   /**
@@ -38,7 +52,7 @@ class SiteTestingHomePageCloneTestCase extends SiteTestCase {
    */
   public function testHomePageLoginMarkup() {
     // Visit the home page.
-    $this->drupalGet('');
+    $this->drupalGet('<front>');
 
     // Check the username field are present.
     $this->assertFieldByName('name', '', 'Username field found.');
@@ -47,7 +61,7 @@ class SiteTestingHomePageCloneTestCase extends SiteTestCase {
     $this->drupalLogin($this->siteUser);
 
     // Visit the homepage and check the username field is not present.
-    $this->drupalGet('');
+    $this->drupalGet('<front>');
     $this->assertNoFieldByName('name', '', 'Username not visible for logged in user.');
   }
 
@@ -56,7 +70,7 @@ class SiteTestingHomePageCloneTestCase extends SiteTestCase {
    */
   public function testStillAnon() {
     // Visit the home page.
-    $this->drupalGet('');
+    $this->drupalGet('<front>');
 
     // Check that the powered by block exists using XPATH.
     $powered_by_block = $this->xpath('//div[@id="block-system-powered-by"]');
@@ -66,18 +80,5 @@ class SiteTestingHomePageCloneTestCase extends SiteTestCase {
     if ($powered_by_block) {
       $this->assertText('Powered by Drupal', 'Powered by message is correct.');
     }
-  }
-
-  /**
-   * Remove the user created in this test before running the final tear down.
-   */
-  public function tearDown() {
-    // Remove user created in the setUp part of this test.
-    if ($this->siteUser) {
-      user_delete($this->siteUser->uid);
-    }
-
-    // Run the default teardown function provided by our common testing class.
-    parent::tearDown();
   }
 }

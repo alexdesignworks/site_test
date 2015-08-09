@@ -22,8 +22,8 @@ class SiteTestExampleTestCase extends SiteTestCase {
    * An example test.
    *
    * To create a new test, simply prefix a public function name in this class
-   * with the word 'test' and it will be picked up by the system. For example
-   * testFoo and testBar functions would run as tests.
+   * with the word 'test' and it will be picked up by the system.
+   * For example, testFoo and testBar functions would run as test cases.
    */
   public function testExample() {
     // Visit the user login page.
