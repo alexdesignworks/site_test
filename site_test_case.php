@@ -85,6 +85,8 @@ abstract class SiteTestCase extends DrupalWebTestCase {
     // Set time limit for current test. This limit can be set from with test
     // to allow longer execution time for tests.
     drupal_set_time_limit($this->timeLimit);
+
+    $this->setup = TRUE;
   }
 
   /**
