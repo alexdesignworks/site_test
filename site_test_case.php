@@ -4,13 +4,7 @@
  * @file
  * Common testing class for this Drupal site.
  */
-
 abstract class SiteTestCase extends DrupalWebTestCase {
-  /**
-   * Test mode
-   */
-  protected $testMode;
-
   /**
    * Tables to exclude during data cloning, only their structure will be cloned.
    *
@@ -33,21 +27,30 @@ abstract class SiteTestCase extends DrupalWebTestCase {
   );
 
   /**
-   * Overrides default set up handler to prevent database sand-boxing.
+   * @inheritdoc
    */
   protected function setUp() {
-    switch ($this->getMethod()) {
-      case 'core':
-        $this->setUpForCore();
-        break;
+    // Re-route setUp() based on the test mode.
+    $method = 'setUpFor' . ucfirst($this->getMethod());
+    if (method_exists($this, $method)) {
+      call_user_func(array($this, $method));
+    }
+    else {
+      throw new Exception(t('Undefined test mode @mode', array('@mode' => $this->getMethod())));
+    }
+  }
 
-      case 'site':
-        $this->setUpForOnSite();
-        break;
-
-      case 'clone':
-        $this->setUpForClone();
-        break;
+  /**
+   * @inheritdoc
+   */
+  protected function tearDown() {
+    // Re-route tearDown() based on the test mode.
+    $method = 'tearDownFor' . ucfirst($this->getMethod());
+    if (method_exists($this, $method)) {
+      call_user_func(array($this, $method));
+    }
+    else {
+      throw new Exception(t('Undefined test mode @mode', array('@mode' => $this->getMethod())));
     }
   }
 
@@ -61,7 +64,7 @@ abstract class SiteTestCase extends DrupalWebTestCase {
   /**
    * Set up for on-site, non-sandbox testing.
    */
-  protected function setUpForOnSite() {
+  protected function setUpForSite() {
     // Use current files directories: public, private, temp.
     // Although directories are not set to variables (variables are already
     // set to these directories), these class properties must have values
@@ -204,25 +207,6 @@ abstract class SiteTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Overrides default tear down handler to prevent database sandbox deletion.
-   */
-  protected function tearDown() {
-    switch ($this->getMethod()) {
-      case 'core':
-        $this->tearDownForCore();
-        break;
-
-      case 'site':
-        $this->tearDownForOnSite();
-        break;
-
-      case 'clone':
-        $this->tearDownForClone();
-        break;
-    }
-  }
-
-  /**
    * Tear down for core based testing.
    */
   protected function tearDownForCore() {
@@ -232,7 +216,7 @@ abstract class SiteTestCase extends DrupalWebTestCase {
   /**
    * Tear down for on site testing.
    */
-  protected function tearDownForOnSite() {
+  protected function tearDownForSite() {
     // In case a fatal error occurred that was not in the test process read the
     // log to pick up any fatal errors.
     simpletest_log_read($this->testId, $this->databasePrefix, get_class($this), TRUE);
@@ -317,16 +301,9 @@ abstract class SiteTestCase extends DrupalWebTestCase {
    *   The method of the test. Defaults to 'core'.
    */
   public function getMethod() {
-    $allowed_methods = array('core', 'onsite', 'clone');
     $info = $this->getInfo();
 
-    if (!empty($info['mode']) && in_array($info['mode'], $allowed_methods)) {
-      $method = $info['mode'];
-    }
-    else {
-      $method = array_shift($allowed_methods);
-    }
-
-    return $method;
+    // Fall back to 'core' if 'mode' was not specified in the test info.
+    return !empty($info['mode']) ? $info['mode'] : 'core';
   }
 }
