@@ -59,8 +59,8 @@ dependencies:
     </VirtualHost>" > apache-vhost.conf
   - cp apache-vhost.conf /etc/apache2/sites-available/default
   - sudo sed -e "s?%HOME%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
-  - sudo sed -e "s?%PROJECT_DIR%?docroot?g" --in-place /etc/apache2/sites-available/default
-  - sudo sed -e "s?%SERVER%?SERVER?g" --in-place /etc/apache2/sites-available/default
+  - sudo sed -e "s?%PROJECT_DIR%?$BUILD_DIR?g" --in-place /etc/apache2/sites-available/default
+  - sudo sed -e "s?%SERVER%?$SERVER?g" --in-place /etc/apache2/sites-available/default
   - sudo a2enmod rewrite
   - sudo service apache2 restart
   # Increase PHP memory size for running tests.
