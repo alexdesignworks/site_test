@@ -48,38 +48,21 @@ class SiteTestingHomePageCoreTestCase extends SiteTestCase {
   }
 
   /**
-   * Tests that logged in users do not get log in form.
+   * Tests that existing user can authenticate.
    */
-  public function testHomePageLoginMarkup() {
+  public function testHomePageLogin() {
+    $xpath_not_logged_in = '//body[contains(@class, "not-logged-in")]';
+    $xpath_logged_in = '//body[contains(@class, "logged-in")]';
+
     // Visit the home page.
     $this->drupalGet('<front>');
-
-    // Check the welcome message and username field are present.
-    $this->assertText('Welcome to Drupal', 'Title text found.');
-    $this->assertFieldByName('name', '', 'Username field found.');
+    $this->assertTrue($this->xpath($xpath_not_logged_in), 'User is not logged in initially');
 
     // Log in as the site user we created in the setUp phase of the test.
     $this->drupalLogin($this->siteUser);
 
     // Visit the homepage and check the username field is not present.
     $this->drupalGet('<front>');
-    $this->assertNoFieldByName('name', '', 'Username not visible for logged in user.');
-  }
-
-  /**
-   * Test that the home page has the 'Powered by Drupal' message.
-   */
-  public function testStillAnon() {
-    // Visit the home page.
-    $this->drupalGet('<front>');
-
-    // Check that the powered by block exists using XPATH.
-    $powered_by_block = $this->xpath('//div[@id="block-system-powered-by"]');
-    $this->assertTrue($powered_by_block, 'Powered by block exists.');
-
-    // If the powered by block exists, check the powered by text exists.
-    if ($powered_by_block) {
-      $this->assertText('Powered by Drupal', 'Powered by message is correct.');
-    }
+    $this->assertTrue($this->xpath($xpath_logged_in), 'User is logged in after logging in');
   }
 }
