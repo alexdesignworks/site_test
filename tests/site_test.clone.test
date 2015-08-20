@@ -4,7 +4,7 @@
  * @file
  * Test for the home page of this website on cloned BD.
  */
-class SiteTestingHomePageCloneTestCase extends SiteTestCase {
+class SiteTestingHomePageCloneWebTestCase extends SiteWebTestCase {
   /**
    * @var
    * The user created for current test.

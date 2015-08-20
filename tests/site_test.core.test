@@ -4,7 +4,7 @@
  * Test for the home page of this website.
  */
 
-class SiteTestingHomePageCoreTestCase extends SiteTestCase {
+class SiteTestingHomePageCoreWebTestCase extends SiteWebTestCase {
   /**
    * @var
    * The user created for current test.

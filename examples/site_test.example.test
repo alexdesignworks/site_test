@@ -4,7 +4,7 @@
  * Site Test case example.
  */
 
-class SiteTestExampleTestCase extends SiteTestCase {
+class SiteTestExampleWebTestCase extends SiteWebTestCase {
 
   /**
    * Provide information about the site test.

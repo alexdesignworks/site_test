@@ -5,7 +5,7 @@ package = Testing
 dependencies[] = simpletest
 
 core = 7.x
-files[] = site_test_case.php
+files[] = site_web_test_case.php
 files[] = tests/site_test.site.test
 files[] = tests/site_test.core.test
 files[] = tests/site_test.clone.test

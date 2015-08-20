@@ -4,7 +4,7 @@
  * @file
  * Common testing class for this Drupal site.
  */
-abstract class SiteTestCase extends DrupalWebTestCase {
+abstract class SiteWebTestCase extends DrupalWebTestCase {
   /**
    * Tables to exclude during data cloning, only their structure will be cloned.
    *

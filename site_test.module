@@ -42,7 +42,7 @@ function site_test_simpletest_alter(&$groups) {
 
   foreach ($groups as $group_name => &$group) {
     foreach ($group as $test_class_name => $test) {
-      if (is_a($test_class_name, 'SiteTestCase', TRUE)) {
+      if (is_a($test_class_name, 'SiteWebTestCase', TRUE)) {
         $site_tests[$group_name][$test_class_name] = $test;
       }
     }
