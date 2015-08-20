@@ -74,11 +74,6 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     $this->private_files_directory = variable_get('file_private_path');
     $this->temp_files_directory = file_directory_temp();
 
-    // Reset/rebuild all data structures to make sure that any new hooks are
-    // picked up.
-    // @todo: Is this really required? It could be very slow on huge DBs.
-    $this->resetAll();
-
     // Use the test mail class instead of the default mail handler class.
     variable_set('mail_system', array('default-system' => 'TestingMailSystem'));
 
@@ -136,11 +131,6 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     $this->public_files_directory = $this->originalFileDirectory;
     $this->private_files_directory = variable_get('file_private_path');
     $this->temp_files_directory = file_directory_temp();
-
-    // Reset/rebuild all data structures to make sure that any new hooks are
-    // picked up.
-    // @todo: Is this really required? It could be very slow on huge DBs.
-    $this->resetAll();
 
     // Restore necessary variables.
     variable_set('install_task', 'done');
