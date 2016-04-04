@@ -71,6 +71,8 @@ dependencies:
   override:
   # Install drush.
   - composer global require --no-interaction drush/drush:8.*.*
+  - composer require --no-interaction alexdesignworks/dcr
+  - cd $HOME/$CIRCLE_PROJECT_REPONAME && bash vendor/bin/dcr install
   post:
   # Create $DOCROOT directory and set ownership and permisions.
   - mkdir -p $DOCROOT
@@ -100,9 +102,13 @@ dependencies:
 
 test:
   pre:
+  # Clear cache.
   - drush --root=$DOCROOT cache-clear drush
   # Test that current module's source was properly copied into modules dir.
   - "[ \"$(ls -A $MODULES_PATH/$MODULE_NAME)\" ]"
 
   override:
+  # Lint code.
+  - source ~/.profile && dcr $MODULES_PATH/$MODULE_NAME
+  # Run tests.
   - php $DOCROOT/scripts/run-tests.sh --php $PHP_EXECUTABLE --url $WEB_URL --xml $TEST_RESULTS "$MODULE_TESTS"
