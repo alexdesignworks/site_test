@@ -39,7 +39,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     // Re-route setUp() based on the test mode.
     $method = 'setUpFor' . ucfirst($this->getMethod());
     if (method_exists($this, $method)) {
-      call_user_func([$this, $method]);
+      call_user_func([$this, $method], func_get_args());
     }
     else {
       throw new Exception(t('Undefined test mode @mode', ['@mode' => $this->getMethod()]));
@@ -53,7 +53,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     // Re-route tearDown() based on the test mode.
     $method = 'tearDownFor' . ucfirst($this->getMethod());
     if (method_exists($this, $method)) {
-      call_user_func([$this, $method]);
+      call_user_func([$this, $method], func_get_args());
     }
     else {
       throw new Exception(t('Undefined test mode @mode', ['@mode' => $this->getMethod()]));
@@ -64,7 +64,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
    * Initialize a standard Drupal core simpletest case.
    */
   protected function setUpForCore() {
-    parent::setUp();
+    call_user_func_array('parent::setUp', func_get_args());
   }
 
   /**
@@ -211,7 +211,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
    * Tear down for core based testing.
    */
   protected function tearDownForCore() {
-    parent::tearDown();
+    call_user_func_array('parent::tearDown', func_get_args());
   }
 
   /**
