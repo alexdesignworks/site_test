@@ -16,7 +16,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
    *
    * @var array
    */
-  protected $excludeTables = array(
+  protected $excludeTables = [
     'cache',
     'cache_block',
     'cache_bootstrap',
@@ -30,7 +30,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     'cache_update',
     'simpletest',
     'watchdog',
-  );
+  ];
 
   /**
    * {@inheritdoc}
@@ -39,10 +39,10 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     // Re-route setUp() based on the test mode.
     $method = 'setUpFor' . ucfirst($this->getMethod());
     if (method_exists($this, $method)) {
-      call_user_func(array($this, $method));
+      call_user_func([$this, $method]);
     }
     else {
-      throw new Exception(t('Undefined test mode @mode', array('@mode' => $this->getMethod())));
+      throw new Exception(t('Undefined test mode @mode', ['@mode' => $this->getMethod()]));
     }
   }
 
@@ -53,10 +53,10 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     // Re-route tearDown() based on the test mode.
     $method = 'tearDownFor' . ucfirst($this->getMethod());
     if (method_exists($this, $method)) {
-      call_user_func(array($this, $method));
+      call_user_func([$this, $method]);
     }
     else {
-      throw new Exception(t('Undefined test mode @mode', array('@mode' => $this->getMethod())));
+      throw new Exception(t('Undefined test mode @mode', ['@mode' => $this->getMethod()]));
     }
   }
 
@@ -81,7 +81,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     $this->temp_files_directory = file_directory_temp();
 
     // Use the test mail class instead of the default mail handler class.
-    variable_set('mail_system', array('default-system' => 'TestingMailSystem'));
+    variable_set('mail_system', ['default-system' => 'TestingMailSystem']);
 
     // Set time limit for current test. This limit can be set from with test
     // to allow longer execution time for tests.
@@ -112,7 +112,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     // All static variables need to be reset before the database prefix is
     // changed, since DrupalCacheArray implementations attempt to
     // write back to persistent caches when they are destructed.
-    $conf = array();
+    $conf = [];
     drupal_static_reset();
     $this->changeDatabasePrefix();
     if (!$this->setupDatabasePrefix) {
@@ -150,7 +150,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     $language = language_default();
 
     // Use the test mail class instead of the default mail handler class.
-    variable_set('mail_system', array('default-system' => 'TestingMailSystem'));
+    variable_set('mail_system', ['default-system' => 'TestingMailSystem']);
 
     drupal_set_time_limit($this->timeLimit);
     $this->setup = TRUE;
@@ -174,7 +174,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     $schemas = drupal_get_schema(NULL, TRUE);
 
     // Gather all prefixed source table names.
-    $sources = array();
+    $sources = [];
     foreach ($schemas as $name => $schema) {
       $sources[$name] = Database::getConnection()
         ->prefixTables('{' . $name . '}');
@@ -223,7 +223,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     simpletest_log_read($this->testId, $this->databasePrefix, get_class($this), TRUE);
 
     // Output info about any captured emails.
-    $email_count = count(variable_get('drupal_test_email_collector', array()));
+    $email_count = count(variable_get('drupal_test_email_collector', []));
     if ($email_count) {
       $message = format_plural($email_count, '1 e-mail was sent during this test.', '@count e-mails were sent during this test.');
       $this->pass($message, t('E-mail'));
@@ -244,7 +244,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     simpletest_log_read($this->testId, $this->databasePrefix, get_class($this), TRUE);
 
     // Output info about any captured emails.
-    $email_count = count(variable_get('drupal_test_email_collector', array()));
+    $email_count = count(variable_get('drupal_test_email_collector', []));
     if ($email_count) {
       $message = format_plural($email_count, '1 e-mail was sent during this test.', '@count e-mails were sent during this test.');
       $this->pass($message, t('E-mail'));
@@ -272,7 +272,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
 
     // Ensure that internal logged in variable and cURL options are reset.
     $this->loggedInUser = FALSE;
-    $this->additionalCurlOptions = array();
+    $this->additionalCurlOptions = [];
 
     // Reload module list and implementations to ensure that test module hooks
     // aren't called after tests.

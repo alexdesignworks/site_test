@@ -19,12 +19,12 @@ class SiteTestingHomePageSiteWebTestCase extends SiteWebTestCase {
    * Information about the home page test.
    */
   public static function getInfo() {
-    return array(
+    return [
       'name' => 'Home page site',
       'description' => 'Tests the contents of the home page on current website.',
       'group' => 'Site Testing',
       'mode' => 'site',
-    );
+    ];
   }
 
   /**
@@ -35,7 +35,7 @@ class SiteTestingHomePageSiteWebTestCase extends SiteWebTestCase {
     parent::setUp();
 
     // Create the site user to be used within the home page tests during setup.
-    $this->siteUser = $this->drupalCreateUser(array('access content'));
+    $this->siteUser = $this->drupalCreateUser(['access content']);
   }
 
   /**

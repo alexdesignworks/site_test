@@ -12,12 +12,12 @@ class SiteTestExampleWebTestCase extends SiteWebTestCase {
    * Provide information about the site test.
    */
   public static function getInfo() {
-    return array(
+    return [
       'name' => 'Example test',
       'description' => 'Description of the test.',
       'group' => 'Example group',
       'mode' => 'site',
-    );
+    ];
   }
 
   /**
