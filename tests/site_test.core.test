@@ -4,10 +4,14 @@
  * Test for the home page of this website.
  */
 
+/**
+ * Class SiteTestingHomePageCoreWebTestCase.
+ */
 class SiteTestingHomePageCoreWebTestCase extends SiteWebTestCase {
   /**
-   * @var
    * The user created for current test.
+   *
+   * @var object
    */
   protected $siteUser;
 
@@ -15,27 +19,27 @@ class SiteTestingHomePageCoreWebTestCase extends SiteWebTestCase {
    * Information about the home page test.
    */
   public static function getInfo() {
-    return array(
+    return [
       'name' => 'Home page core',
       'description' => 'Tests the contents of the home page within sandbox.',
       'group' => 'Site Testing',
       'mode' => 'core',
-    );
+    ];
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function setUp() {
     // Run the default setUp function provided by our common testing class.
     parent::setUp();
 
     // Create the site user to be used within the home page tests during setup.
-    $this->siteUser = $this->drupalCreateUser(array('access content'));
+    $this->siteUser = $this->drupalCreateUser(['access content']);
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function tearDown() {
     // Remove the user created in this test before running the final tear down.
@@ -65,4 +69,5 @@ class SiteTestingHomePageCoreWebTestCase extends SiteWebTestCase {
     $this->drupalGet('<front>');
     $this->assertTrue($this->xpath($xpath_logged_in), 'User is logged in after logging in');
   }
+
 }

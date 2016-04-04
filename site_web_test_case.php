@@ -1,10 +1,16 @@
 <?php
-
 /**
  * @file
  * Common testing class for this Drupal site.
  */
+
+/**
+ * Class SiteWebTestCase.
+ */
+// @codingStandardsIgnoreStart
 abstract class SiteWebTestCase extends DrupalWebTestCase {
+  // @codingStandardsIgnoreEnd
+
   /**
    * Tables to exclude during data cloning, only their structure will be cloned.
    *
@@ -27,7 +33,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
   );
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   protected function setUp() {
     // Re-route setUp() based on the test mode.
@@ -41,7 +47,7 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   protected function tearDown() {
     // Re-route tearDown() based on the test mode.
@@ -193,7 +199,9 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
       }
 
       $destination = Database::getConnection()->prefixTables('{' . $name . '}');
+      // @codingStandardsIgnoreStart
       db_query('INSERT INTO ' . db_escape_table($destination) . ' SELECT * FROM ' . db_escape_table($sources[$name]));
+      // @codingStandardsIgnoreEnd
     }
 
     $db_prefix = $db_prefix_current;
@@ -299,4 +307,5 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
     // Fall back to 'core' if 'mode' was not specified in the test info.
     return !empty($info['mode']) ? $info['mode'] : 'core';
   }
+
 }

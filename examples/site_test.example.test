@@ -4,8 +4,10 @@
  * Site Test case example.
  */
 
+/**
+ * Class SiteTestExampleWebTestCase.
+ */
 class SiteTestExampleWebTestCase extends SiteWebTestCase {
-
   /**
    * Provide information about the site test.
    */
@@ -43,4 +45,5 @@ class SiteTestExampleWebTestCase extends SiteWebTestCase {
     // Ensure the user gets an access denied page.
     $this->assertResponse(403, 'Administration page was not accessible');
   }
+
 }
