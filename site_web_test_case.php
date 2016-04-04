@@ -102,18 +102,19 @@ abstract class SiteWebTestCase extends DrupalWebTestCase {
       return FALSE;
     }
 
-    // Reset all statics and variables to perform tests in a clean environment.
-    $conf = array();
-    drupal_static_reset();
-
     // Change the database prefix.
     // All static variables need to be reset before the database prefix is
     // changed, since DrupalCacheArray implementations attempt to
     // write back to persistent caches when they are destructed.
+    $conf = array();
+    drupal_static_reset();
     $this->changeDatabasePrefix();
     if (!$this->setupDatabasePrefix) {
       return FALSE;
     }
+
+    // Refresh variables from newly cloned database.
+    $this->refreshVariables();
 
     // Preset the 'install_profile' system variable, so the first call into
     // system_rebuild_module_data() (in drupal_install_system()) will register
