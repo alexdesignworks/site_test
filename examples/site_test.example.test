@@ -8,6 +8,7 @@
  * Class SiteTestExampleWebTestCase.
  */
 class SiteTestExampleWebTestCase extends SiteWebTestCase {
+
   /**
    * Provide information about the site test.
    */
