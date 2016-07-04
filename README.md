@@ -1,5 +1,5 @@
 # Site Test Drupal module
-[![Circle CI](https://circleci.com/gh/alexdesignworks/site_test.svg?style=svg)](https://circleci.com/gh/alexdesignworks/site_test)
+[![Circle CI](https://circleci.com/gh/alexdesignworks/site_test.svg?style=shield)](https://circleci.com/gh/alexdesignworks/site_test)
 
 The Site Test module (https://www.drupal.org/project/site_test) is an extension of the Drupal core Simpletest module for running site specific tests in place on an active Drupal installation. 
 
